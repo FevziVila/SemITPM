@@ -24,7 +24,7 @@ jobs:
 
     - name: Build Frontend
       run: |
-        docker build -t $DOCKER_USERNAME/frontend:latest ./frontend.gitops
+        docker build -t $DOCKER_USERNAME/frontend:latest ./frontend.gitops/gitops
         docker push $DOCKER_USERNAME/frontend:latest
 
     - name: Build Backend
