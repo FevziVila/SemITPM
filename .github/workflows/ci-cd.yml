@@ -23,8 +23,9 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build Frontend
+      working-directory: ./frontend.gitops/gitops 
       run: |
-        docker build -t $DOCKER_USERNAME/frontend:latest ./frontend.gitops/gitops
+        docker build -t $DOCKER_USERNAME/frontend:latest .
         docker push $DOCKER_USERNAME/frontend:latest
 
     - name: Build Backend
