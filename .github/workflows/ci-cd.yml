@@ -36,11 +36,3 @@ jobs:
       run: |
         docker build -t $DOCKER_USERNAME/backend:latest ./backend.gitops
         docker push $DOCKER_USERNAME/backend:latest
-
-    - name: Setup kubectl
-      uses: azure/setup-kubectl@v3
-      
-    - name: Deploy to Kubernetes
-      run: |
-        kubectl rollout restart deployment frontend
-        kubectl rollout restart deployment backend
