@@ -9,12 +9,12 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
 
 public interface Repository extends ElasticsearchRepository<StockModel, String>{
     
-    @Query("""
+  @Query("""
     {
       "bool": {
         "should": [
-          { "match": { "name": "?0" } },
-          { "match": { "symbol": "?0" } }
+          { "wildcard": { "name": { "value": "?0*" } } },
+          { "wildcard": { "symbol": { "value": "?0*" } } }
         ],
         "minimum_should_match": 1
       }
