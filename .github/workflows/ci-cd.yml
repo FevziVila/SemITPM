@@ -22,10 +22,14 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
+    - name: Show directory structure
+      run: |
+        pwd
+        ls -la
+
     - name: Build Frontend
       run: |
-        cd frontend.gitops/gitops
-        docker build -t $DOCKER_USERNAME/frontend:latest .
+        docker build -t $DOCKER_USERNAME/frontend:latest -f frontend.gitops/gitops/Dockerfile frontend.gitops/gitops
         docker push $DOCKER_USERNAME/frontend:latest
 
     - name: Build Backend
