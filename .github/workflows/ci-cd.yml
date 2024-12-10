@@ -11,7 +11,7 @@ env:
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
 jobs:
-  build-and-deploy:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -22,16 +22,22 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Show directory structure
+    - name: Test Frontend
+      working-directory: frontend.gitops/gitops
       run: |
-        pwd
-        ls -la
-
+        npm install
+        npm test
+        
     - name: Build Frontend
       run: |
-        docker build -t $DOCKER_USERNAME/frontend:latest -f frontend.gitops/gitops/Dockerfile frontend.gitops/gitops
+        docker build -t $DOCKER_USERNAME/frontend:latest frontend.gitops/gitops
         docker push $DOCKER_USERNAME/frontend:latest
-
+      #Tests
+    - name: Test Backend
+      working-directory: backend.gitops
+      run: |
+        ./gradlew test
+        
     - name: Build Backend
       run: |
         docker build -t $DOCKER_USERNAME/backend:latest ./backend.gitops
