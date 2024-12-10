@@ -23,8 +23,8 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build Frontend
-      working-directory: ./frontend.gitops/gitops 
       run: |
+        cd frontend.gitops/gitops
         docker build -t $DOCKER_USERNAME/frontend:latest .
         docker push $DOCKER_USERNAME/frontend:latest
 
@@ -33,7 +33,6 @@ jobs:
         docker build -t $DOCKER_USERNAME/backend:latest ./backend.gitops
         docker push $DOCKER_USERNAME/backend:latest
 
-    # Hier kommt der optionale Kubernetes-Teil
     - name: Setup kubectl
       uses: azure/setup-kubectl@v3
       
